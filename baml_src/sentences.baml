@@ -1,3 +1,6 @@
+// ---------------------------------------
+// Output Schemas
+// ---------------------------------------
 
 class SentenceResponse {
     sentence string
@@ -11,10 +14,12 @@ class Punctuate {
 
 class Error {
     reason string? @description(#"
-        An explanation of why an error is being thrown.
+        An explanation of why an error is being thrown, such as prompt injection, etc.
     "#)
-}
+} // Error
 
+
+// Generates the seed sentence - the first sentence of the response.
 function GenFirstSentence(request: string, limit: int) -> SentenceResponse | Error {
 
     client CustomGPT4oMini
@@ -28,6 +33,7 @@ function GenFirstSentence(request: string, limit: int) -> SentenceResponse | Err
     "#
 } // GenFirstSentence
 
+// Generates the next sentence or returns a Punctuate object.
 function GenNextSentence(request: string, limit: int, generated: string) -> SentenceResponse | Punctuate {
     client CustomGPT4oMini
     prompt #"
@@ -43,6 +49,10 @@ function GenNextSentence(request: string, limit: int, generated: string) -> Sent
         {{ ctx.output_format }}
     "#
 } // GenNextSentence
+
+
+// Testing
+
 
 test first {
     functions [GenFirstSentence]
