@@ -18,6 +18,9 @@ class Error {
     "#)
 } // Error
 
+// -------------------------------------
+// Generation Functions
+// -------------------------------------
 
 // Generates the seed sentence - the first sentence of the response.
 function GenFirstSentence(request: string, limit: int) -> SentenceResponse | Error {
